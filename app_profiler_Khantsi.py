@@ -21,6 +21,11 @@ st.image(
     caption="MamzoKhay"
 )
 
+st.header("Professional Summary")
+st.write("I have always aspired to witness significant progress within our generation and lifetime. I aim to make a meaningful contribution to the community through active participation in transdisciplinary research and innovation. I firmly believe that every individual possesses remarkable potential and excellence, needing only proper guidance and fair opportunities to reach their full potential.")
+# Add a section for publications
+st.header("Publications")
+
 # Add a section for publications
 st.header("Publications")
 uploaded_file = st.file_uploader("Publications.csv", type="csv")
@@ -55,61 +60,51 @@ st.header("Explore STEM Data")
 # Generate dummy data
 Microbiology_data = pd.DataFrame({
     "Experiment": ["PGPR", "CLPP", "Metagenomics", "Bioinformatics"],
-    "Energy (MeV)": [4.2, 2.9, 3.4, 7.1],
+    "Data volume (GB)": [3.2, 2.9, 9.4, 11.1],
     "Date": pd.date_range(start="2025-01-01", periods=4),
 })
 
-astronomy_data = pd.DataFrame({
-    "Celestial Object": ["Mars", "Venus", "Jupiter", "Saturn", "Moon"],
-    "Brightness (Magnitude)": [-2.0, -4.6, -1.8, 0.2, -12.7],
+Microbial_data = pd.DataFrame({
+    "Genus Name": ["Bacillus", "Pseudomonas", "Proteobacteria", "Salmonella", "Actionobacteria"],
+    "Abundance (Size)": [2.0, 4.6, 1.8, 0.2, 12.7],
     "Observation Date": pd.date_range(start="2024-01-01", periods=5),
 })
 
-weather_data = pd.DataFrame({
-    "City": ["Cape Town", "London", "New York", "Tokyo", "Sydney"],
-    "Temperature (°C)": [25, 10, -3, 15, 30],
+Sampling_site_data = pd.DataFrame({
+    "City": ["Mahikeng", "Stella", "Lichtenburg", "Rustenburg", "Brits"],
+    "Temperature (°C)": [25, 10, 13, 25, 30],
     "Humidity (%)": [65, 70, 55, 80, 50],
-    "Recorded Date": pd.date_range(start="2024-01-01", periods=5),
+    "Recorded Date": pd.date_range(start="2025-01-01", periods=5),
 })
 
 # Tabbed view for STEM data
 st.subheader("STEM Data Viewer")
 data_option = st.selectbox(
     "Choose a dataset to explore", 
-    ["Microbiology Experiments", "Astronomy Observations", "Weather Data"]
+    ["Microbiology Experiments", "Sampling Site Data"]
 )
 
 if data_option == "Microbiology Experiments":
     st.write("### Microbiology Experiment Data")
     st.dataframe(Microbiology_data)
     # Add widget to filter by Energy levels
-    energy_filter = st.slider("Filter by Energy (MeV)", 0.0, 10.0, (0.0, 10.0))
+    energy_filter = st.slider("Filter by Data volume (GB)", 0.0, 10.0, (0.0, 10.0))
     filtered_Microbiology = Microbiology_data[
-        Microbiology_data["Energy (MeV)"].between(energy_filter[0], energy_filter[1])
+        Microbiology_data["Data volume (GB)"].between(energy_filter[0], energy_filter[1])
     ]
     st.write(f"Filtered Results for Energy Range {energy_filter}:")
     st.dataframe(filtered_Microbiology)
 
-elif data_option == "Astronomy Observations":
-    st.write("### Astronomy Observation Data")
-    st.dataframe(astronomy_data)
-    # Add widget to filter by Brightness
-    brightness_filter = st.slider("Filter by Brightness (Magnitude)", -15.0, 5.0, (-15.0, 5.0))
-    filtered_astronomy = astronomy_data[
-        astronomy_data["Brightness (Magnitude)"].between(brightness_filter[0], brightness_filter[1])
-    ]
-    st.write(f"Filtered Results for Brightness Range {brightness_filter}:")
-    st.dataframe(filtered_astronomy)
 
-elif data_option == "Weather Data":
-    st.write("### Weather Data")
-    st.dataframe(weather_data)
+elif data_option == "Sampling Site Data":
+    st.write("### Sampling Site Data")
+    st.dataframe(Sampling_site_data)
     # Add widgets to filter by temperature and humidity
     temp_filter = st.slider("Filter by Temperature (°C)", -10.0, 40.0, (-10.0, 40.0))
     humidity_filter = st.slider("Filter by Humidity (%)", 0, 100, (0, 100))
-    filtered_weather = weather_data[
-        weather_data["Temperature (°C)"].between(temp_filter[0], temp_filter[1]) &
-        weather_data["Humidity (%)"].between(humidity_filter[0], humidity_filter[1])
+    filtered_weather = Sampling_site_data[
+        Sampling_site_data["Temperature (°C)"].between(temp_filter[0], temp_filter[1]) &
+        Sampling_site_data["Humidity (%)"].between(humidity_filter[0], humidity_filter[1])
     ]
     st.write(f"Filtered Results for Temperature {temp_filter} and Humidity {humidity_filter}:")
     st.dataframe(filtered_weather)
